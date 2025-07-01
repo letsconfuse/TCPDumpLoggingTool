@@ -42,7 +42,7 @@ It is useful for **penetration testers**, **network administrators**, and **secu
 ## 📂 Project Structure
 
 ```
-tcpdump_logger/
+TCPDumpLoggingTool/
 │
 ├── capture.sh           # Main Bash script to run tcpdump and save logs
 ├── logs/                # Folder to store saved log or pcap files
@@ -56,8 +56,8 @@ tcpdump_logger/
 ### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/letsconfuse/tcpdump-logger.git
-cd tcpdump-logger
+git clone https://github.com/letsconfuse/TCPDumpLoggingTool.git
+cd TCPDumpLoggingTool
 ```
 
 ### Step 2: Make the Script Executable
