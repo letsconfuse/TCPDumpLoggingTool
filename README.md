@@ -2,40 +2,40 @@
 
 ## 📘 Overview
 
-This project demonstrates how to use the `tcpdump` utility to **capture, analyze, and log network traffic** on a local machine. Built during the Coursera Project Network course titled *"Analyze Network Traffic with TCPDump: Build a Logging Tool"*, this project focuses on creating a **basic packet logging tool** that monitors traffic on a specific interface and saves it to a log file for inspection and auditing.
+This project demonstrates how to use the `tcpdump` utility to **capture, analyze, and log network traffic** on a local machine. Built as part of a practical Coursera hands-on project, this tool automates network packet capture using Bash scripting, enabling ethical traffic monitoring on Linux systems.
 
-It is useful for **penetration testers**, **network administrators**, and **security analysts** looking to understand basic network behavior, packet filtering, and passive network monitoring techniques using command-line tools.
+It is useful for **penetration testers**, **network administrators**, and **security analysts** looking to understand basic network behavior, packet filtering, and passive monitoring using command-line tools.
 
 ---
 
 ## 🎯 Objectives
 
-* Understand and use the `tcpdump` tool to capture live network packets
-* Apply basic filtering expressions to monitor specific traffic (e.g., port, protocol)
-* Save captured packets to a file in `.pcap` or `.txt` format
-* Build a script to automate tcpdump capture with logs
-* Analyze the logs to identify incoming/outgoing IPs, ports, and traffic types
+* Capture live network traffic using `tcpdump`
+* Apply basic filters for traffic monitoring (e.g., port, protocol)
+* Log captured traffic with timestamps in `.txt` format
+* Include safe defaults (time and packet limits)
+* Ensure real-world usability with auto-detection and cleanup
 
 ---
 
 ## 💠 Tools & Technologies Used
 
-| Tool                       | Purpose                                     |
-| -------------------------- | ------------------------------------------- |
-| **tcpdump**                | Capturing network traffic from interface    |
-| **Bash**                   | Scripting the automation process            |
-| **Linux CLI**              | Running and monitoring network tools        |
-| **Wireshark** *(optional)* | Graphical packet analysis for `.pcap` files |
+| Tool                       | Purpose                                  |
+| -------------------------- | ---------------------------------------- |
+| **tcpdump**                | Capturing network traffic from interface |
+| **Bash**                   | Automating traffic capture and logging   |
+| **Linux CLI**              | Operating environment                    |
+| **Wireshark** *(optional)* | Further visual analysis of pcap files    |
 
 ---
 
 ## 📁 Features
 
-* Captures live network packets using `tcpdump`
-* Filters traffic based on port, IP, or protocol (customizable)
-* Saves packet details to a readable log file (`.txt`)
-* Includes timestamped filenames for organized storage
-* Lightweight and terminal-based—runs on most Linux systems
+* Interface auto-detection fallback if `eth0` is unavailable
+* Captures only 100 packets or runs for 60 seconds (customizable)
+* Logs activity to both `tcpdump_log_*.txt` and `session_activity.log`
+* Automatically deletes logs older than 7 days
+* Built-in ethical warning and legal responsibility disclaimer
 
 ---
 
@@ -44,9 +44,9 @@ It is useful for **penetration testers**, **network administrators**, and **secu
 ```
 TCPDumpLoggingTool/
 │
-├── capture.sh           # Main Bash script to run tcpdump and save logs
-├── logs/                # Folder to store saved log or pcap files
-├── README.md            # Documentation and usage guide
+├── capture.sh             # Main Bash script to capture and log packets
+├── logs/                  # Folder where all logs are saved
+├── README.md              # Documentation and usage guide
 ```
 
 ---
@@ -66,53 +66,51 @@ cd TCPDumpLoggingTool
 chmod +x capture.sh
 ```
 
-### Step 3: Run the Script (requires sudo)
+### Step 3: Run the Script with Superuser Rights
 
 ```bash
 sudo ./capture.sh
 ```
 
-This will start capturing packets on the default interface (`eth0` or `wlan0`) and save them to a log file like:
+Captured traffic will be saved in the `logs/` directory as:
 
 ```
-logs/tcpdump_log_2025-07-01_10-30-00.txt
+tcpdump_log_YYYY-MM-DD_HH-MM-SS.txt
 ```
 
 ---
 
-## 🧠 Sample tcpdump Commands Used
+## 🧠 Sample tcpdump Logic Inside Script
 
 ```bash
-tcpdump -i any -n -tttt
-tcpdump -i eth0 port 80
-tcpdump -i wlan0 -w logs/network.pcap
+# Example from capture.sh
+sudo timeout 60 tcpdump -i "$INTERFACE" -n -tttt -c 100 > "$LOG_FILE"
 ```
 
 ---
 
 ## 📌 Use Cases
 
-* Network monitoring and traffic logging
-* Basic forensic and incident response
-* Security audit or testing setup
-* Packet inspection for malware or anomaly detection
+* Network traffic logging for analysis
+* Basic packet inspection for educational labs
+* Quick diagnostics and connection auditing
+* Automation-friendly, runs from terminal or cron
 
 ---
 
 ## 🔐 Ethical Considerations
 
-> This tool is built strictly for **educational** and **authorized network analysis only**. Do not use it to capture traffic from networks you do not own or have permission to monitor.
+> ⚠️ This tool is for educational and authorized use only. Never capture traffic on networks you do not own or have explicit permission to analyze. Unauthorized sniffing may violate privacy laws and organizational policies.
 
 ---
 
 ## 📜 License
 
-This project is open-source and available under the [MIT License](LICENSE).
+This project is released under the [MIT License](LICENSE).
 
 ---
 
 ## 🙌 Credits
 
-This project was inspired and developed as part of the **Coursera Project Network course:**
+Created as part of the Coursera Project Network hands-on training:
 **"Analyze Network Traffic with TCPDump: Build a Logging Tool"**
-Instructor: *\[Add instructor if applicable]*
